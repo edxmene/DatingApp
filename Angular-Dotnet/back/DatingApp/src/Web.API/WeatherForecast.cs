@@ -1,4 +1,4 @@
-namespace Dating.Web.API
+namespace Web.API
 {
     public class WeatherForecast
     {

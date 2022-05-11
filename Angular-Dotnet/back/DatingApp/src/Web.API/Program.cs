@@ -1,3 +1,8 @@
+using Dating.Application.Contracts.Persistance;
+using Dating.Persistance;
+using Dating.Persistance.Repositories;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,7 +11,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+IConfiguration configuration = builder.Configuration;
+builder.Services.AddDbContext<DatingContext>(options =>
+          options.UseSqlServer(configuration.GetConnectionString("DatingConnectionString"))
+        );
+builder.Services.AddTransient<IUserRepository, UserRepository>(); // USER REPOSITORY
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
